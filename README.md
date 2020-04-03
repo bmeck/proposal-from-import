@@ -1,34 +1,49 @@
-# template-for-proposals
+# from ... import ...;
 
-A repository template for ECMAScript proposals.
+Code completion is painful for the current order of `import` and `from`.
+This proposal seeks to add the inverse to make code completion work.
 
-## Before creating a proposal
+```mjs
+from "foo" import {bar};
+```
 
-Please ensure the following:
-  1. You have read the [process document](https://tc39.github.io/process-document/)
-  1. You have reviewed the [existing proposals](https://github.com/tc39/proposals/)
-  1. You are aware that your proposal requires being a member of TC39, or locating a TC39 member to "champion" your proposal
+## Explanation
 
-## Create your proposal repo
+Previously:
 
-Follow these steps:
-  1.  Create your own repo, clone this one, and copy its contents into your repo. (Note: Do not fork this repo in GitHub's web interface, as that will later prevent transfer into the TC39 organization)
-  1.  Go to your repo settings “Options” page, under “GitHub Pages”, and set the source to the **master branch** and click Save.
-      1. Ensure "Issues" is checked.
-      1. Also, you probably want to disable "Wiki" and "Projects"
-  1.  Avoid merge conflicts with build process output files by running:
-      ```sh
-      git config --local --add merge.output.driver true
-      git config --local --add merge.output.driver true
-      ```
-  1.  Add a post-rewrite git hook to auto-rebuild the output on every commit:
-      ```sh
-      cp hooks/post-rewrite .git/hooks/post-rewrite
-      chmod +x .git/hooks/post-rewrite
-      ```
+```mjs
+import /*code completion here*/
+```
 
-## Maintain your proposal repo
+Could be a string for the module specier, or the list of imported binding.
 
-  1. Make your changes to `spec.emu` (ecmarkup uses HTML syntax, but is not HTML, so I strongly suggest not naming it ".html")
-  1. Any commit that makes meaningful changes to the spec, should run `npm run build` and commit the resulting output.
-  1. Whenever you update `ecmarkup`, run `npm run build` and commit any changes that come from that dependency.
+* Tools cannot statically determine the list of possible bindings without the specifier, but it hasn't been added to the code yet.
+* Tools can create a good completion by inserting the specifier, but doing so means a programmer needs to reposition the cursor to insert binding names which is the common case of imports.
+
+```mjs
+from /*code completion here*/
+```
+
+Module specifiers are the only thing that could be here to allow better code completion.
+
+### Imports without bindings
+
+```mjs
+import "a";
+```
+
+Just for posterity we can add the `from` prefixed form, even though it is more verbose:
+
+```mjs
+from "a" import;
+```
+
+## Working with other proposals
+
+### Module attributes
+
+The position of module attributes would still be at the end.
+
+```mjs
+from "./foo.json" import foo with type="json"
+```
