@@ -26,7 +26,7 @@ Could be a string for the module specier, or the list of imported binding.
 
 ```mjs
 import "foo"/*code completion/programmer moves caret here after typing*/
-      ^ code completion caret needs to be here for binding names
+   // ^ code completion caret needs to be here for binding names
 ```
 
 ### Proposed
