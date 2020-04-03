@@ -1,7 +1,8 @@
 # from ... import ...;
 
-Champion: Bradley Farias (@bmeck)
-Stage: 0
+** Champion **: Bradley Farias (@bmeck)
+
+** Stage **: 0
 
 Code completion is painful for the current order of `import` and `from`.
 This proposal seeks to add the inverse to make code completion work.
@@ -56,4 +57,23 @@ The position of module attributes would still be at the end.
 
 ```mjs
 from "./foo.json" import foo with type="json"
+```
+
+## Concerns
+
+* We would be growing the grammar without any new semantics added to the language.
+* We would need to have different `[no LineTerminator here]` rules in this form of import.
+
+```mjs
+// allowed currently
+import
+	* as foo
+from
+  'foo';
+```
+
+Due to `from` needing to be a contextual keyword it needs to avoid problems with ASI and would have a grammar like:
+
+```mjs
+from [no LineTerminator here] ModuleSpecifier import ImportClause?
 ```
