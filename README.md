@@ -1,5 +1,8 @@
 # from ... import ...;
 
+Champion: Bradley Farias (@bmeck)
+Stage: 0
+
 Code completion is painful for the current order of `import` and `from`.
 This proposal seeks to add the inverse to make code completion work.
 
