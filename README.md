@@ -12,7 +12,7 @@ from "foo" import {bar};
 
 ## Explanation
 
-Previously:
+### Status Quo
 
 ```mjs
 import /*code completion here*/
@@ -22,6 +22,13 @@ Could be a string for the module specier, or the list of imported binding.
 
 * Tools cannot statically determine the list of possible bindings without the specifier, but it hasn't been added to the code yet.
 * Tools can create a good completion by inserting the specifier, but doing so means a programmer needs to reposition the cursor to insert binding names which is the common case of imports.
+
+```mjs
+import "foo"/*code completion/programmer moves caret here after typing*/
+      ^ code completion caret needs to be here for binding names
+```
+
+### Proposed
 
 ```mjs
 from /*code completion here*/
