@@ -69,7 +69,7 @@ from "./foo.json" import foo with type="json"
 import
 	* as foo
 from
-  'foo';
+        'foo';
 ```
 
 Due to `from` needing to be a contextual keyword it needs to avoid problems with ASI and would have a grammar like:
